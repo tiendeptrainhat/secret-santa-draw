@@ -1,5 +1,5 @@
 // Danh sách người tham gia
-const participants = ['Nguyễn Đình Trung', 'Nguyễn Thị Mỹ Linh', 'Đinh Văn Sĩ', 'Nguyễn Thị Hồng Ngọc', 'Vũ Thị Phương', 'Phạm Văn Tiến', 'Cao Tiến Thiên', 'Nguyễn Thị Ngọc Trang', 'Nguyễn Thị Ngọc Trang', 'Đỗ Văn Cường'];
+const participants = ['Nguyễn Đình Trung', 'Nguyễn Thị Mỹ Linh', 'Đinh Văn Sĩ', 'Nguyễn Thị Hồng Ngọc', 'Vũ Thị Phương', 'Phạm Văn Tiến', 'Cao Tiến Thiên', 'Nguyễn Thị Ngọc Trang', 'Đỗ Văn Cường'];
 
 // Xử lý sự kiện nút "Bốc thăm"
 document.getElementById('drawButton').addEventListener('click', function () {
