@@ -1,40 +1,42 @@
-// Tạo hiệu ứng bông tuyết
-function createSnowflakes() {
-  const snowflakeContainer = document.getElementById('snowflakes');
-  const snowflakeCount = 50; // Số lượng bông tuyết
+// Danh sách người tham gia
+const participants = ['Nguyễn Đình Trung', 'Nguyễn Thị Mỹ Linh', 'Đinh Văn Sĩ', 'Nguyễn Thị Hồng Ngọc', 'Vũ Thị Phương', 'Phạm Văn Tiến', 'Cao Tiến Thiên', 'Nguyễn Thị Ngọc Trang', 'Nguyễn Thị Ngọc Trang', 'Đỗ Văn Cường'];
 
-  for (let i = 0; i < snowflakeCount; i++) {
-    const snowflake = document.createElement('div');
-    snowflake.className = 'snowflake';
-    snowflake.textContent = '❄';
-    snowflake.style.left = Math.random() * 100 + 'vw';
-    snowflake.style.animationDelay = Math.random() * 10 + 's';
-    snowflake.style.opacity = Math.random();
-    snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+// Xử lý sự kiện nút "Bốc thăm"
+document.getElementById('drawButton').addEventListener('click', function () {
+    // Xáo trộn danh sách
+    const shuffledParticipants = shuffleArray(participants.slice());
 
-    snowflakeContainer.appendChild(snowflake);
+    // Tạo cặp
+    const pairs = [];
+    while (shuffledParticipants.length > 1) {
+        const person1 = shuffledParticipants.pop();
+        const person2 = shuffledParticipants.pop();
+        pairs.push(`${person1} nối với ${person2}`);
+    }
 
-    // Xóa bông tuyết sau khi rơi
-    snowflake.addEventListener('animationend', () => snowflake.remove());
-  }
-}
+    // Nếu còn dư 1 người thì thêm vào danh sách
+    if (shuffledParticipants.length === 1) {
+        pairs.push(`${shuffledParticipants.pop()} chưa có cặp`);
+    }
 
-// Gọi hàm tạo hiệu ứng bông tuyết
-createSnowflakes();
+    // Hiển thị kết quả trên giao diện
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = ''; // Xóa nội dung cũ
+    pairs.forEach(pair => {
+        const p = document.createElement('p');
+        p.textContent = pair;
+        resultDiv.appendChild(p);
+    });
 
-// Giới hạn nút bốc thăm
-let hasDrawn = false; // Cờ kiểm tra việc bấm nút
-
-document.getElementById('draw-button').addEventListener('click', function () {
-  if (hasDrawn) {
-    alert('Bạn chỉ được bốc thăm 1 lần!');
-    return;
-  }
-
-  hasDrawn = true;
-
-  // Logic bốc thăm
-  const participants = ['Nguyễn Đình Trung', 'Nguyễn Thị Mỹ Linh', 'Đinh Văn Sĩ', 'Nguyễn Thị Hồng Ngọc', 'Vũ Thị Phương', 'Phạm Văn Tiến', 'Cao Tiến Thiên', 'Nguyễn Thị Ngọc Trang', 'Nguyễn Thị Ngọc Trang', 'Đỗ Văn Cường'];
-  const randomIndex = Math.floor(Math.random() * participants.length);
-  alert('Người được chọn là: ' + participants[randomIndex]);
+    // Tắt nút để không bấm lại
+    this.disabled = true;
 });
+
+// Hàm xáo trộn mảng
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
