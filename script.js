@@ -34,7 +34,7 @@ document.getElementById('draw-button').addEventListener('click', function () {
   hasDrawn = true;
 
   // Logic bốc thăm
-  const participants = ['Người A', 'Người B', 'Người C', 'Người D'];
+  const participants = ['Nguyễn Đình Trung', 'Nguyễn Thị Mỹ Linh', 'Đinh Văn Sĩ', 'Nguyễn Thị Hồng Ngọc', 'Vũ Thị Phương', 'Phạm Văn Tiến', 'Cao Tiến Thiên', 'Nguyễn Thị Ngọc Trang', 'Nguyễn Thị Ngọc Trang', 'Đỗ Văn Cường'];
   const randomIndex = Math.floor(Math.random() * participants.length);
   alert('Người được chọn là: ' + participants[randomIndex]);
 });
