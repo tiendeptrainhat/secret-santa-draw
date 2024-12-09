@@ -1,44 +1,55 @@
+/* Body và nút bốc thăm */
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(120deg, #f3f4f6, #a7c0db);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.container {
-    text-align: center;
-    background: white;
-    padding: 20px 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-h1 {
-    color: #444;
-    font-size: 24px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
 }
 
 button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  color: #2c3e50;
+  background-color: #ecf0f1;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: #0056b3;
+  background-color: #bdc3c7;
 }
 
-#result {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #333;
-    font-weight: bold;
+/* Hiệu ứng bông tuyết */
+.snowflake {
+  color: #fff;
+  font-size: 1.2em;
+  font-family: Arial, sans-serif;
+  position: fixed;
+  top: -2em;
+  z-index: 1000;
+  animation: fall 10s linear infinite, sway 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  0% {
+    top: -2em;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+@keyframes sway {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px);
+  }
 }
