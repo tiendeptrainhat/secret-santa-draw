@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
             background-color: #f0f8ff;
+            overflow: hidden; /* Để bông tuyết không tràn màn hình */
         }
         h1 {
             margin-top: 20px;
@@ -36,6 +37,21 @@
         }
         p {
             margin: 5px 0;
+        }
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            font-size: 24px;
+            color: white;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
         }
     </style>
 </head>
