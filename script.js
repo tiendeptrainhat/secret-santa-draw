@@ -1,6 +1,12 @@
 // Danh sách người tham gia
 const participants = ['Nguyễn Đình Trung', 'Nguyễn Thị Mỹ Linh', 'Đinh Văn Sĩ', 'Nguyễn Thị Hồng Ngọc', 'Vũ Thị Phương', 'Phạm Văn Tiến', 'Cao Tiến Thiên', 'Nguyễn Thị Ngọc Trang'];
 
+// Các cặp không được ghép
+const restrictedPairs = [
+    ['Vũ Thị Phương', 'Phạm Văn Tiến'],
+    ['Nguyễn Thị Ngọc Trang', 'Cao Tiến Thiên']
+];
+
 // Tạo hiệu ứng bông tuyết
 function createSnowflake() {
     const snowflake = document.createElement('div');
@@ -30,7 +36,22 @@ document.getElementById('drawButton').addEventListener('click', function () {
     const pairs = [];
     while (shuffledParticipants.length > 1) {
         const person1 = shuffledParticipants.pop();
-        const person2 = shuffledParticipants.pop();
+        let person2;
+
+        // Tìm người thứ hai phù hợp
+        do {
+            person2 = shuffledParticipants.pop();
+        } while (
+            !isValidPair(person1, person2) && 
+            shuffledParticipants.length > 0
+        );
+
+        if (!isValidPair(person1, person2)) {
+            // Nếu không thể tìm người phù hợp, đưa người thứ hai quay lại danh sách
+            shuffledParticipants.push(person2);
+            break;
+        }
+
         pairs.push(`${person1} nối với ${person2}`);
     }
 
@@ -59,4 +80,12 @@ function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+}
+
+// Hàm kiểm tra xem cặp có hợp lệ không
+function isValidPair(person1, person2) {
+    return !restrictedPairs.some(pair =>
+        (pair[0] === person1 && pair[1] === person2) ||
+        (pair[0] === person2 && pair[1] === person1)
+    );
 }
