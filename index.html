@@ -1,15 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Secret Santa Draw</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bốc Thăm Ghép Cặp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            margin-top: 20px;
+            color: #333;
+        }
+        #drawButton {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #drawButton:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        p {
+            margin: 5px 0;
+        }
+    </style>
 </head>
 <body>
-  <h1>Secret Santa Draw</h1>
-  <button id="draw-button">Bốc Thăm</button>
-  <div id="snowflakes"></div> <!-- Hiệu ứng bông tuyết -->
-  <script src="script.js"></script>
+    <h1>Bốc Thăm Ghép Cặp</h1>
+    <button id="drawButton">Bốc Thăm</button>
+    <div id="result"></div>
+    <script src="script.js"></script>
 </body>
 </html>
