@@ -10,49 +10,15 @@ const names = [
   "Nguyễn Thị Ngọc Trang"
 ];
 
-// Điều kiện cấm ghép cặp
-const forbiddenPairs = [
-  ["Vũ Thị Phương", "Phạm Văn Tiến"],
-  ["Nguyễn Thị Ngọc Trang", "Cao Tiến Thiên"]
-];
-
-// Hàm tạo hiệu ứng bông tuyết
-function createSnowflakes() {
-  const snowflake = document.createElement("div");
-  snowflake.classList.add("snowflake");
-  snowflake.textContent = "❄";
-  snowflake.style.left = Math.random() * 100 + "vw";
-  snowflake.style.animationDuration = Math.random() * 3 + 7 + "s";
-  snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
-  document.body.appendChild(snowflake);
-
-  setTimeout(() => {
-    snowflake.remove();
-  }, 10000);
-}
-
-setInterval(createSnowflakes, 200);
-
-// Hàm kiểm tra cặp có hợp lệ hay không
-function isValidPair(pair) {
-  return !forbiddenPairs.some(
-    forbidden =>
-      (forbidden[0] === pair[0] && forbidden[1] === pair[1]) ||
-      (forbidden[1] === pair[0] && forbidden[0] === pair[1])
-  );
-}
-
-// Hàm tạo cặp ngẫu nhiên
+// Hàm tạo cặp ngẫu nhiên đảm bảo mỗi người chỉ xuất hiện 1 lần
 function randomizePairs() {
-  const shuffledNames = [...names].sort(() => Math.random() - 0.5);
+  const shuffledNames = [...names].sort(() => Math.random() - 0.5); // Xáo trộn danh sách ngẫu nhiên
   const pairs = [];
 
   for (let i = 0; i < shuffledNames.length; i += 2) {
-    const pair = [shuffledNames[i], shuffledNames[i + 1]];
-    if (isValidPair(pair)) {
-      pairs.push(pair);
-    } else {
-      return randomizePairs(); // Lặp lại nếu cặp không hợp lệ
+    // Nếu số lượng người lẻ, người cuối sẽ không có cặp
+    if (i + 1 < shuffledNames.length) {
+      pairs.push([shuffledNames[i], shuffledNames[i + 1]]);
     }
   }
 
@@ -62,7 +28,7 @@ function randomizePairs() {
 // Hàm hiển thị kết quả
 function displayResult() {
   const resultDiv = document.getElementById("result");
-  resultDiv.innerHTML = "";
+  resultDiv.innerHTML = ""; // Xóa kết quả cũ
 
   const pairs = randomizePairs();
   pairs.forEach(pair => {
