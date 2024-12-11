@@ -1,91 +1,76 @@
-// Danh sách người tham gia
-const participants = ['Nguyễn Đình Trung', 'Nguyễn Thị Mỹ Linh', 'Đinh Văn Sĩ', 'Nguyễn Thị Hồng Ngọc', 'Vũ Thị Phương', 'Phạm Văn Tiến', 'Cao Tiến Thiên', 'Nguyễn Thị Ngọc Trang'];
-
-// Các cặp không được ghép
-const restrictedPairs = [
-    ['Vũ Thị Phương', 'Phạm Văn Tiến'],
-    ['Nguyễn Thị Ngọc Trang', 'Cao Tiến Thiên']
+// Danh sách các tên
+const names = [
+  "Nguyễn Đình Trung",
+  "Nguyễn Thị Mỹ Linh",
+  "Đinh Văn Sĩ",
+  "Nguyễn Thị Hồng Ngọc",
+  "Vũ Thị Phương",
+  "Phạm Văn Tiến",
+  "Cao Tiến Thiên",
+  "Nguyễn Thị Ngọc Trang"
 ];
 
-// Tạo hiệu ứng bông tuyết
-function createSnowflake() {
-    const snowflake = document.createElement('div');
-    snowflake.classList.add('snowflake');
-    snowflake.textContent = '❄';
-    snowflake.style.left = Math.random() * window.innerWidth + 'px';
-    snowflake.style.animationDuration = Math.random() * 3 + 2 + 's'; // Thời gian rơi ngẫu nhiên
-    snowflake.style.opacity = Math.random();
-    snowflake.style.fontSize = Math.random() * 10 + 10 + 'px'; // Kích thước ngẫu nhiên
-    document.body.appendChild(snowflake);
+// Điều kiện cấm ghép cặp
+const forbiddenPairs = [
+  ["Vũ Thị Phương", "Phạm Văn Tiến"],
+  ["Nguyễn Thị Ngọc Trang", "Cao Tiến Thiên"]
+];
 
-    // Xóa bông tuyết sau khi rơi xong
-    snowflake.addEventListener('animationend', () => {
-        snowflake.remove();
-    });
+// Hàm tạo hiệu ứng bông tuyết
+function createSnowflakes() {
+  const snowflake = document.createElement("div");
+  snowflake.classList.add("snowflake");
+  snowflake.textContent = "❄";
+  snowflake.style.left = Math.random() * 100 + "vw";
+  snowflake.style.animationDuration = Math.random() * 3 + 7 + "s";
+  snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+  document.body.appendChild(snowflake);
+
+  setTimeout(() => {
+    snowflake.remove();
+  }, 10000);
 }
 
-// Gọi hiệu ứng bông tuyết mỗi 100ms
-setInterval(createSnowflake, 100);
+setInterval(createSnowflakes, 200);
 
-// Xử lý sự kiện nút "Bốc thăm"
-document.getElementById('drawButton').addEventListener('click', function () {
-    // Xáo trộn danh sách
-    const shuffledParticipants = shuffleArray(participants.slice());
-
-    // Tạo cặp
-    const pairs = [];
-    while (shuffledParticipants.length > 1) {
-        const person1 = shuffledParticipants.pop();
-        let person2;
-
-        // Tìm người thứ hai phù hợp
-        do {
-            person2 = shuffledParticipants.pop();
-        } while (
-            !isValidPair(person1, person2) && 
-            shuffledParticipants.length > 0
-        );
-
-        if (!isValidPair(person1, person2)) {
-            // Nếu không thể tìm người phù hợp, đưa người thứ hai quay lại danh sách
-            shuffledParticipants.push(person2);
-            break;
-        }
-
-        pairs.push(`${person1} nối với ${person2}`);
-    }
-
-    // Nếu còn dư 1 người thì thêm vào danh sách
-    if (shuffledParticipants.length === 1) {
-        pairs.push(`${shuffledParticipants.pop()} chưa có cặp`);
-    }
-
-    // Hiển thị kết quả trên giao diện
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = ''; // Xóa nội dung cũ
-    pairs.forEach(pair => {
-        const p = document.createElement('p');
-        p.textContent = pair;
-        resultDiv.appendChild(p);
-    });
-
-    // Tắt nút để không bấm lại
-    this.disabled = true;
-});
-
-// Hàm xáo trộn mảng
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+// Hàm kiểm tra cặp có hợp lệ hay không
+function isValidPair(pair) {
+  return !forbiddenPairs.some(
+    forbidden =>
+      (forbidden[0] === pair[0] && forbidden[1] === pair[1]) ||
+      (forbidden[1] === pair[0] && forbidden[0] === pair[1])
+  );
 }
 
-// Hàm kiểm tra xem cặp có hợp lệ không
-function isValidPair(person1, person2) {
-    return !restrictedPairs.some(pair =>
-        (pair[0] === person1 && pair[1] === person2) ||
-        (pair[0] === person2 && pair[1] === person1)
-    );
+// Hàm tạo cặp ngẫu nhiên
+function randomizePairs() {
+  const shuffledNames = [...names].sort(() => Math.random() - 0.5);
+  const pairs = [];
+
+  for (let i = 0; i < shuffledNames.length; i += 2) {
+    const pair = [shuffledNames[i], shuffledNames[i + 1]];
+    if (isValidPair(pair)) {
+      pairs.push(pair);
+    } else {
+      return randomizePairs(); // Lặp lại nếu cặp không hợp lệ
+    }
+  }
+
+  return pairs;
 }
+
+// Hàm hiển thị kết quả
+function displayResult() {
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = "";
+
+  const pairs = randomizePairs();
+  pairs.forEach(pair => {
+    const pairText = document.createElement("p");
+    pairText.textContent = `${pair[0]} nối với ${pair[1]}`;
+    resultDiv.appendChild(pairText);
+  });
+}
+
+// Xử lý sự kiện nút bấm
+document.getElementById("randomizeBtn").addEventListener("click", displayResult);
