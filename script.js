@@ -1,25 +1,24 @@
 // Danh sách các tên
 const names = [
-  "Nguyễn Đình Trung",
-  "Nguyễn Thị Mỹ Linh",
+  "Cao Tiến Thiên",
   "Đinh Văn Sĩ",
+  "Nguyễn Thị Ngọc Trang",
+  "Nguyễn Thị Mỹ Linh",
+  "Phạm Văn Tiến",
   "Nguyễn Thị Hồng Ngọc",
   "Vũ Thị Phương",
-  "Phạm Văn Tiến",
-  "Cao Tiến Thiên",
-  "Nguyễn Thị Ngọc Trang"
+  "Nguyễn Đình Trung"
 ];
 
-// Hàm tạo cặp ngẫu nhiên đảm bảo mỗi người chỉ xuất hiện 1 lần
-function randomizePairs() {
+// Hàm tạo vòng tròn ghép cặp
+function createCircularPairs() {
   const shuffledNames = [...names].sort(() => Math.random() - 0.5); // Xáo trộn danh sách ngẫu nhiên
   const pairs = [];
 
-  for (let i = 0; i < shuffledNames.length; i += 2) {
-    // Nếu số lượng người lẻ, người cuối sẽ không có cặp
-    if (i + 1 < shuffledNames.length) {
-      pairs.push([shuffledNames[i], shuffledNames[i + 1]]);
-    }
+  for (let i = 0; i < shuffledNames.length; i++) {
+    const current = shuffledNames[i];
+    const next = shuffledNames[(i + 1) % shuffledNames.length]; // Người tiếp theo, vòng lại đầu nếu cuối danh sách
+    pairs.push(`${current} nối với ${next}`);
   }
 
   return pairs;
@@ -30,10 +29,10 @@ function displayResult() {
   const resultDiv = document.getElementById("result");
   resultDiv.innerHTML = ""; // Xóa kết quả cũ
 
-  const pairs = randomizePairs();
+  const pairs = createCircularPairs();
   pairs.forEach(pair => {
     const pairText = document.createElement("p");
-    pairText.textContent = `${pair[0]} nối với ${pair[1]}`;
+    pairText.textContent = pair;
     resultDiv.appendChild(pairText);
   });
 }
